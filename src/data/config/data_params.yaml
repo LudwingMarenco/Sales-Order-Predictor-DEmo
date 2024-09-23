@@ -1,0 +1,5 @@
+historical_sales: "data/raw/historical_orders.parquet"
+august_sales: "data/raw/august_total_sales.parquet"
+august_missing: "data/raw/august_with_missing_order_days.parquet"
+order_file: "data/processed/order_data.pqt"
+test_file: "data/processed/order_test.pqt"

@@ -1,0 +1,4 @@
+training_file: "data/final/order_training.pqt"
+test_file: "data/final/order_test.pqt"
+max_depth: 100
+model_name: "models/sales_regressor.pkl"

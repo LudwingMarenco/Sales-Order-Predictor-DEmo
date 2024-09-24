@@ -1,0 +1,28 @@
+stages:
+  get_data:
+    cmd: python3 src/data/sales_data_main.py --config_file src/data/config/data_params.yaml
+    deps:
+    - data/raw/historical_orders.parquet
+    - data/raw/august_total_sales.parquet
+    outs:
+    - data/raw/august_with_missing_order_days.parquet
+    - data/processed/order_data.pqt
+    - data/processed/order_test.pqt
+  process_data:
+    cmd: python3 src/features/sales_feat_main.py --config_file src/features/config/feat_params.yaml
+    deps:
+    - data/processed/order_data.pqt
+    - data/processed/order_test.pqt
+    outs:
+    - data/final/order_training.pqt
+    - data/final/order_test.pqt
+  training:
+    cmd: python3 src/training/sales_training_main.py --config_file src/training/config/training_params.yaml
+    deps:
+    - data/final/order_training.pqt
+    - data/final/order_test.pqt
+    params:
+    - src/training/config/training_params.yaml:
+      - max_depth
+    outs:
+    - models/sales_regressor.pkl

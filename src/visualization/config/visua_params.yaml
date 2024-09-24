@@ -1,0 +1,3 @@
+training_data: "data/final/order_training.pqt"
+test_data: "data/final/order_test.pqt"
+model: "models/sales_regressor.pkl"

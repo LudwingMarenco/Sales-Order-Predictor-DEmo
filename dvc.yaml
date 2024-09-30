@@ -1,6 +1,13 @@
 stages:
   get_data:
     cmd: python3 src/data/sales_data_main.py --config_file src/data/config/data_params.yaml
+    params:
+    - src/data/config/data_params.yaml:
+      - historical_sales
+      - august_sales
+      - august_missing
+      - order_file
+      - test_file
     deps:
     - data/raw/historical_orders.parquet
     - data/raw/august_total_sales.parquet
@@ -10,6 +17,12 @@ stages:
     - data/processed/order_test.pqt
   process_data:
     cmd: python3 src/features/sales_feat_main.py --config_file src/features/config/feat_params.yaml
+    params:
+    - src/features/config/feat_params.yaml:
+      - order_file
+      - order_test_file
+      - training_file
+      - test_file
     deps:
     - data/processed/order_data.pqt
     - data/processed/order_test.pqt
@@ -18,6 +31,12 @@ stages:
     - data/final/order_test.pqt
   training:
     cmd: python3 src/training/sales_training_main.py --config_file src/training/config/training_params.yaml
+    params:
+    - src/training/config/training_params.yaml:
+      - training_file
+      - test_file
+      - max_depth
+      - model_name    
     deps:
     - data/final/order_training.pqt
     - data/final/order_test.pqt
